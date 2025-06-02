@@ -15,8 +15,19 @@ soup = BeautifulSoup(response.read(), 'html.parser')
 for script in soup(["script", "style"]):
     script.extract()
 
-# Finding Titles
+# Finding Title/ Question Name
 x = soup.find_all("div", "title")
-y = soup.find_all("div", "p")
-print(y)
-# print(x[0])
+
+# Finding Question / Output / Example [input, output] / Note
+content = soup.find("div", "ttypography")
+
+# print(content)
+## For all discription text
+# desc = content.find_all('p') ## will be a list
+
+## For all inputs examples
+inputs = content.find("div", {"class": "input"})
+input_processed = inputs.find("pre") # will be a list
+
+outputs = content.find("div", {"class": "output"})
+output_processed = outputs.find("pre") # will be a list
