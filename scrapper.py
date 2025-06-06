@@ -61,5 +61,5 @@ def parse_page(url):
     final_body += f"\n {note_text}"
     for n in notes:
         final_body += f"\n {n}"
-    return final_body
+    return final_body, input_list, output_list
 

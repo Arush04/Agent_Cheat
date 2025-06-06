@@ -61,9 +61,9 @@ def clean_code(code):
     return code.strip()
 
 
-def run_test(user_code, test_case):
-    input_data = '\n'.join(test_case['input'])  # join list into single string
-    expected_output = '\n'.join(test_case['output']).strip().split('\n')  # same for output
+def run_test(user_code, inputs, outputs):
+    input_data = '\n'.join(inputs)
+    expected_output = '\n'.join(outputs)
 
     full_code = f"""
 import io
@@ -113,7 +113,7 @@ def extract_code(text):
     return text
 
 def main(url):
-    problem = parse_page(url)
+    problem, inputs, outputs = parse_page(url)
     prompt = format_prompt(problem)
     samples = generate_solution(prompt)
     for i, solution in enumerate(samples):
@@ -129,7 +129,7 @@ def main(url):
         # Run tests
         print(f"Sample {i+1} Result:")
         test_case = problem["public_tests"]
-        passed = run_test(solution_code, test_case)
+        passed = run_test(solution_code, inputs, outputs)
         print("✅ Passed" if passed else "❌ Failed")
 
 if __name__ == "__main__":
