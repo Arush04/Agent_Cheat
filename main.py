@@ -61,40 +61,40 @@ def clean_code(code):
     return code.strip()
 
 
-def run_test(user_code, inputs, outputs):
-    input_data = '\n'.join(inputs)
-    expected_output = '\n'.join(outputs)
+# def run_test(user_code, inputs, outputs):
+    # input_data = '\n'.join(inputs)
+    # expected_output = '\n'.join(outputs)
 
-    full_code = f"""
-import io
-import contextlib
-output = []
-input_data = '''{input_data}'''
-input_lines = input_data.strip().split('\\n')
-input = lambda: input_lines.pop(0)
-with contextlib.redirect_stdout(io.StringIO()) as f:
-    solve()
-    output = f.getvalue().strip().split('\\n')
-"""
+    # full_code = f"""
+# import io
+# import contextlib
+# output = []
+# input_data = '''{input_data}'''
+# input_lines = input_data.strip().split('\\n')
+# input = lambda: input_lines.pop(0)
+# with contextlib.redirect_stdout(io.StringIO()) as f:
+    # solve()
+    # output = f.getvalue().strip().split('\\n')
+# """
 
-    full_code += """
-assert output == expected_output, f"Expected: {expected_output}, Got: {output}"
-"""
+    # full_code += """
+# assert output == expected_output, f"Expected: {expected_output}, Got: {output}"
+# """
 
-    try:
-        # Clean up any invisible unicode whitespace in the generated code
-        user_code_clean = clean_code(user_code)
-        print("Generated code:\n", user_code_clean)
-        local_env = {
-            "contextlib": contextlib,
-            "io": io,
-            "expected_output": expected_output,
-        }
-        exec(user_code_clean + "\n" + full_code, local_env)
-        return True
-    except Exception as e:
-        print(f"❌ Test failed: {e}")
-        return False
+    # try:
+        # # Clean up any invisible unicode whitespace in the generated code
+        # user_code_clean = clean_code(user_code)
+        # print("Generated code:\n", user_code_clean)
+        # local_env = {
+            # "contextlib": contextlib,
+            # "io": io,
+            # "expected_output": expected_output,
+        # }
+        # exec(user_code_clean + "\n" + full_code, local_env)
+        # return True
+    # except Exception as e:
+        # print(f"❌ Test failed: {e}")
+        # return False
 
 def extract_code(text):
     """
@@ -128,8 +128,9 @@ def main(url):
             
         # Run tests
         print(f"Sample {i+1} Result:")
-        passed = run_test(solution_code, inputs, outputs)
-        print("✅ Passed" if passed else "❌ Failed")
+        print(solution_code)
+        # passed = run_test(solution_code, inputs, outputs)
+        # print("✅ Passed" if passed else "❌ Failed")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Enter url to get response")
