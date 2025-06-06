@@ -7,14 +7,14 @@ import argparse
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import os
 
-# os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True,"\
-    # "roundup_power2_divisions:[32:256,64:128,256:64,>:32]"
-# torch.cuda.empty_cache()
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True,"\
+    "roundup_power2_divisions:[32:256,64:128,256:64,>:32]"
+torch.cuda.empty_cache()
 
-# model_name = "deepseek-ai/deepseek-coder-7b-instruct-v1.5"
+model_name = "deepseek-ai/deepseek-coder-7b-instruct-v1.5"
 
-# tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-# model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto", trust_remote_code=True)
 
 def format_prompt(problem):
     return f"""SYSTEM: You are a Python coding assistant. 
