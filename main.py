@@ -128,7 +128,6 @@ def main(url):
             
         # Run tests
         print(f"Sample {i+1} Result:")
-        test_case = problem["public_tests"]
         passed = run_test(solution_code, inputs, outputs)
         print("✅ Passed" if passed else "❌ Failed")
 
