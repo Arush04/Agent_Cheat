@@ -48,18 +48,18 @@ def parse_page(url):
     notes = []
     for n in note_lists:
         notes.append(n.string)
-    print(title)
-    print(body)
-    print("INPUT")
+    final_body = ""
+    final_body += body
+    final_body += "\n INPUT"
     for i in input_list:
-        print(i)
-    print("OUTPUT")
+        final_body += f"\n {i}"
+    final_body += "\n OUTPUT"
     for o in output_list:
-        print(o)
-    print("NOTE")
-    print(note_text)
+        # print(o)
+        final_body += f"\n {o}"
+    final_body += "\n NOTE"
+    final_body += f"\n {note_text}"
     for n in notes:
-        print(n)
+        final_body += f"\n {n}"
+    return final_body
 
-url = "https://codeforces.com/problemset/problem/2116/B"
-parser_page(url)
