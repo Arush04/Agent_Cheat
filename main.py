@@ -5,7 +5,7 @@ import torch
 from scrapper import parse_page
 import argparse
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
+import os
 
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True,"\
     "roundup_power2_divisions:[32:256,64:128,256:64,>:32]"
@@ -95,6 +95,22 @@ assert output == expected_output, f"Expected: {expected_output}, Got: {output}"
     except Exception as e:
         print(f"❌ Test failed: {e}")
         return False
+
+def extract_code(text):
+    """
+    Extracts code between `````` blocks or the first function.
+    """
+    # Try to find code fences first
+    code_blocks = re.findall(r'``````', text, re.DOTALL)  # Added 'text' and flags
+    if code_blocks:
+        return code_blocks[0].strip()  # Take first match and strip whitespace
+    
+    # Fallback: find first function definition (fixed regex)
+    func_match = re.search(r'(def solve\(\):[\s\S]*)', text)  # Fixed "$$$$" → "\(\)"
+    if func_match:
+        return func_match.group(1).strip()
+    
+    return text
 
 def main(url):
     problem = parse_page(url)
